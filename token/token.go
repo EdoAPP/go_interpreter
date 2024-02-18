@@ -6,6 +6,7 @@ const (
 	// Identifiers + literals
 	IDENT = "IDENT" // add, foobar, x, y, ...
 	INT   = "INT"
+
 	// Operators
 	ASSIGN = "="
 	PLUS   = "+"
@@ -16,10 +17,12 @@ const (
 	RPAREN    = ")"
 	LBRACE    = "{"
 	RBRACE    = "}"
+
 	// Keywords
 	// 1343456
 	FUNCTION = "FUNCTION"
 	LET      = "LET"
+	CONST    = "CONST"
 )
 
 type TokenType string
@@ -27,4 +30,18 @@ type TokenType string
 type Token struct {
 	Type    TokenType
 	Literal string
+}
+
+var keywords = map[string]TokenType{
+	"fn":    FUNCTION,
+	"let":   LET,
+	"const": CONST,
+}
+
+func LookupIdent(ident string) TokenType {
+	if tok, ok := keywords[ident]; ok {
+		return tok
+	}
+
+	return IDENT
 }
